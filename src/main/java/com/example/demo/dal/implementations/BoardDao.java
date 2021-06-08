@@ -4,6 +4,7 @@ import com.example.demo.dal.interfaces.IBoardDao;
 import com.example.demo.model.Board;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,6 +42,6 @@ public class BoardDao implements IBoardDao {
 
     @Override
     public List<Board> getBoards(){
-        return (List<Board>) boards;
+        return new ArrayList<Board>(boards.values());
     }
 }
