@@ -3,11 +3,14 @@ package com.example.demo.util.mapping;
 import com.example.demo.controller.GameController.BoardDto;
 import com.example.demo.controller.GameController.PlayerDto;
 import com.example.demo.controller.GameController.SpaceDto;
+import com.example.demo.controller.gameadmin.GameDto;
 import com.example.demo.exceptions.MappingException;
 import com.example.demo.model.Board;
 import com.example.demo.model.Player;
 import com.example.demo.model.Space;
+import com.example.demo.model.admin.Game;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.Mapping;
 
 @Service
 public class DtoMapper implements IDtoMapper {
@@ -99,5 +102,15 @@ public class DtoMapper implements IDtoMapper {
             return new Player(board, playerDto.getPlayerColor(), playerDto.getPlayerName());
         }
         return null;
+    }
+
+    public Game convertToEntity(GameDto gameDto) throws MappingException{
+        Game game = new Game();
+        game.setName(gameDto.getName());
+        if(gameDto.getGameId() != -1){
+            game.setGameId(gameDto.getGameId());
+        }
+        return game;
+
     }
 }
