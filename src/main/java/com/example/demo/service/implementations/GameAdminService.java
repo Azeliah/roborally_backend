@@ -32,7 +32,7 @@ public class GameAdminService implements IGameAdminService {
     public List<Game> getGames() throws ServiceException, DaoException{
         // TODO Change (only for demo)... This needs to be ONLY games send back not taking the boards and making them into games
         List<Game> result = new ArrayList<>(gameDao.getGames());
-        for (Board board: boardDao.getBoards()){
+        /*for (Board board: boardDao.getBoards()){
             Game game = new Game();
             game.name = board.boardName;
             game.id = board.getGameId();
@@ -46,7 +46,7 @@ public class GameAdminService implements IGameAdminService {
                 user.playerName = player.getName();
                 game.users.add(user);
             }
-        }
+        }*/
         return result;
     }
 
