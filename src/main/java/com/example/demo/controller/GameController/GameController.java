@@ -81,9 +81,6 @@ public class GameController {
             Player p = new Player(board, u.getPlayerColor(), u.getPlayerName());
             gameService.addPlayer(board.getGameId(), p);
         }
-
-
-        System.out.println(gameService.getBoard(board.getGameId()).getPlayersNumber());
         return new ResponseEntity<>(boardId, HttpStatus.CREATED);
     }
 
