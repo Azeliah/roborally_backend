@@ -1,10 +1,8 @@
 package com.example.demo.controller.gameadmin;
 
-import com.example.demo.controller.GameController.BoardDto;
 import com.example.demo.exceptions.DaoException;
 import com.example.demo.exceptions.MappingException;
 import com.example.demo.exceptions.ServiceException;
-import com.example.demo.model.Board;
 import com.example.demo.model.admin.Game;
 import com.example.demo.model.admin.User;
 import com.example.demo.service.implementations.GameAdminService;
