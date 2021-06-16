@@ -12,6 +12,7 @@ import com.example.demo.model.Space;
 import com.example.demo.model.admin.Game;
 import com.example.demo.model.admin.User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.Mapping;
 
 @Service
 public class DtoMapper implements IDtoMapper {
@@ -105,10 +106,15 @@ public class DtoMapper implements IDtoMapper {
         return null;
     }
 
-    public Game convertToEntity(GameDto gameDto) throws MappingException {
+    public Game convertToEntity(GameDto gameDto, boolean editMode) throws MappingException{
         Game game = new Game();
-        game.setName(gameDto.getName());
-        if (gameDto.getGameId() != -1) {
+        game.name=gameDto.getName();
+        if (editMode){
+            game.width = gameDto.getWidth();
+            game.height = gameDto.getHeight();
+        }
+        System.out.println(game.name);
+        if(gameDto.getGameId() != -1){
             game.setGameId(gameDto.getGameId());
         }
         return game;

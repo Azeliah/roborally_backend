@@ -30,6 +30,14 @@ public class GameDto {
         return height;
     }
 
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
     public UserDto[] getUsers() {
         return users;
     }

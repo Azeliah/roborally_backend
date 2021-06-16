@@ -1,6 +1,9 @@
 package com.example.demo.dal.implementations;
 
 import com.example.demo.dal.interfaces.IGameDao;
+import com.example.demo.exceptions.DaoException;
+import com.example.demo.exceptions.ServiceException;
+import com.example.demo.model.Board;
 import com.example.demo.model.admin.Game;
 import com.example.demo.model.admin.User;
 import org.springframework.stereotype.Repository;
@@ -60,4 +63,10 @@ public class GameDao implements IGameDao {
     public void addGame(Game game) {
         games.put(game.getGameId(), game);
     }
+
+    @Override
+    public void updateGame (Game game, int gameId) {
+            games.replace(gameId, game);
+    }
 }
+

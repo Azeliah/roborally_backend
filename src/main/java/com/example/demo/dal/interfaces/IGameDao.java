@@ -16,4 +16,6 @@ public interface IGameDao {
     void updateUser(User user);
 
     void addGame(Game game);
+
+    void updateGame(Game game, int gameId) throws DaoException;
 }

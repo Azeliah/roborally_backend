@@ -69,4 +69,11 @@ public class GameAdminService implements IGameAdminService {
     public void updateUser(User user) {
         gameDao.updateUser(user);
     }
+
+    @Override
+    public void editGame(Game game, int gameId) throws ServiceException, DaoException {
+       gameDao.updateGame(game, gameId);
+    }
+
+
 }

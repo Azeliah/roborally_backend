@@ -1,8 +1,10 @@
 package com.example.demo.controller.gameadmin;
 
+import com.example.demo.controller.GameController.BoardDto;
 import com.example.demo.exceptions.DaoException;
 import com.example.demo.exceptions.MappingException;
 import com.example.demo.exceptions.ServiceException;
+import com.example.demo.model.Board;
 import com.example.demo.model.admin.Game;
 import com.example.demo.model.admin.User;
 import com.example.demo.service.implementations.GameAdminService;
@@ -35,7 +37,7 @@ public class GameAdminController {
 
     @PostMapping("/game")
     public ResponseEntity<String> createGame(@RequestBody GameDto gameDto) throws ServiceException, DaoException, MappingException {
-        Game game = dtoMapper.convertToEntity(gameDto);
+        Game game = dtoMapper.convertToEntity(gameDto, false);
         gameAdminService.createGame(game);
         String gameName = gameDto.getName();
         return new ResponseEntity<>(gameName, HttpStatus.CREATED);
@@ -60,5 +62,13 @@ public class GameAdminController {
         User user = dtoMapper.convertToEntity(userDto);
         gameAdminService.updateUser(user);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/game/{gameId}")
+    public ResponseEntity<Void> editBoard(@RequestBody GameDto gameDto, @PathVariable("gameId") int gameId ) throws ServiceException, DaoException, MappingException {
+        Game game = dtoMapper.convertToEntity(gameDto, true);
+        gameAdminService.editGame(game, gameId);
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 }
