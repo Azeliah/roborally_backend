@@ -78,7 +78,7 @@ public class GameController {
         Board board = new Board(gameDto.getWidth(), gameDto.getHeight(), gameDto.getName());
         int boardId = gameService.saveBoard(board);
         for(UserDto u : gameDto.getUsers()){
-            Player p = new Player(board, u.getPlayerColor(), u.getPlayerName());
+            Player p = new Player(board, u.getPlayerColor(), u.getPlayerName(), u.getPlayerId());
             gameService.addPlayer(board.getGameId(), p);
         }
         return new ResponseEntity<>(boardId, HttpStatus.CREATED);
