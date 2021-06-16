@@ -113,12 +113,10 @@ public class DtoMapper implements IDtoMapper {
             game.width = gameDto.getWidth();
             game.height = gameDto.getHeight();
         }
-        System.out.println(game.name);
         if(gameDto.getGameId() != -1){
             game.setGameId(gameDto.getGameId());
         }
         return game;
-
     }
 
     public User convertToEntity(UserDto userDto) {
