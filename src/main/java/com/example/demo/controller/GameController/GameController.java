@@ -1,11 +1,14 @@
 package com.example.demo.controller.GameController;
 
+import com.example.demo.controller.gameadmin.GameDto;
 import com.example.demo.exceptions.DaoException;
 import com.example.demo.exceptions.MappingException;
 import com.example.demo.exceptions.ServiceException;
 import com.example.demo.model.Board;
 import com.example.demo.model.Player;
 import com.example.demo.model.Space;
+import com.example.demo.model.admin.Game;
+import com.example.demo.model.admin.User;
 import com.example.demo.service.interfaces.IGameService;
 import com.example.demo.util.mapping.IDtoMapper;
 import org.springframework.http.HttpStatus;
@@ -64,13 +67,20 @@ public class GameController {
     /**
      * Endpoint for creating a new board
      *
-     * @param boardDTO, a board dto describing the board we want to create
+     * @param gameDto, a game dto describing the board we want to create
      * @return id of the newly created board
      */
     @PostMapping("/board")
-    public ResponseEntity<Integer> createBoard(@RequestBody BoardDto boardDTO) throws ServiceException, DaoException {
-        Board board = dtoMapper.convertToEntity(boardDTO);
+    public ResponseEntity<Integer> createBoard(@RequestBody GameDto gameDto) throws ServiceException, DaoException {
+        Board board = new Board(gameDto.width, gameDto.height, gameDto.getName());
         int boardId = gameService.saveBoard(board);
+        for(User u : gameDto.getUsers()){
+            Player p = new Player(board, u.color, u.playerName);
+            gameService.addPlayer(board.getGameId(), p);
+        }
+
+
+        System.out.println(gameService.getBoard(board.getGameId()).getPlayersNumber());
         return new ResponseEntity<>(boardId, HttpStatus.CREATED);
     }
 
