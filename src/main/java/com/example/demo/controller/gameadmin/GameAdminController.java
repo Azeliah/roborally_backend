@@ -20,7 +20,7 @@ public class GameAdminController {
     private final GameAdminService gameAdminService;
     private final DtoMapper dtoMapper;
 
-    public GameAdminController(GameAdminService gameAdminService, DtoMapper dtoMapper){
+    public GameAdminController(GameAdminService gameAdminService, DtoMapper dtoMapper) {
 
         this.gameAdminService = gameAdminService;
         this.dtoMapper = dtoMapper;
@@ -53,5 +53,12 @@ public class GameAdminController {
         game.getUsers().add(user);
 
         return new ResponseEntity<>(user, HttpStatus.CREATED);
+    }
+
+    @PutMapping("game/{gameId}/user")
+    public ResponseEntity<String> updateUser(@RequestBody UserDto userDto, @PathVariable int gameId) throws ServiceException, DaoException {
+        User user = dtoMapper.convertToEntity(userDto);
+        gameAdminService.updateUser(user);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
