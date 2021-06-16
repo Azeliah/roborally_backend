@@ -1,6 +1,7 @@
 package com.example.demo.controller.GameController;
 
 import com.example.demo.controller.gameadmin.GameDto;
+import com.example.demo.controller.gameadmin.UserDto;
 import com.example.demo.exceptions.DaoException;
 import com.example.demo.exceptions.MappingException;
 import com.example.demo.exceptions.ServiceException;
@@ -72,10 +73,10 @@ public class GameController {
      */
     @PostMapping("/board")
     public ResponseEntity<Integer> createBoard(@RequestBody GameDto gameDto) throws ServiceException, DaoException {
-        Board board = new Board(gameDto.width, gameDto.height, gameDto.getName());
+        Board board = new Board(gameDto.getWidth(), gameDto.getHeight(), gameDto.getName());
         int boardId = gameService.saveBoard(board);
-        for(User u : gameDto.getUsers()){
-            Player p = new Player(board, u.color, u.playerName);
+        for(UserDto u : gameDto.getUsers()){
+            Player p = new Player(board, u.getPlayerColor(), u.getPlayerName());
             gameService.addPlayer(board.getGameId(), p);
         }
 
