@@ -33,7 +33,7 @@ public class GameAdminService implements IGameAdminService {
         // TODO Change (only for demo)... This needs to be ONLY games send back not taking the boards and making them into games
         List<Game> result = new ArrayList<>(gameDao.getGames());
 
-        if (result.size() == 0) {
+        /*if (result.size() == 0) {
             for (Board board : boardDao.getBoards()) {
                 Game game = new Game();
                 game.name = board.boardName;
@@ -52,7 +52,7 @@ public class GameAdminService implements IGameAdminService {
                 }
                 gameDao.addGame(game);
             }
-        }
+        }*/
         return result;
     }
 
