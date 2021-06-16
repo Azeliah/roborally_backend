@@ -1,5 +1,6 @@
 package com.example.demo.controller.GameController;
 
+import com.example.demo.dal.implementations.BoardDao;
 import com.example.demo.exceptions.DaoException;
 import com.example.demo.exceptions.MappingException;
 import com.example.demo.exceptions.ServiceException;
@@ -7,6 +8,7 @@ import com.example.demo.model.Board;
 import com.example.demo.model.Player;
 import com.example.demo.model.Space;
 import com.example.demo.service.interfaces.IGameService;
+import com.example.demo.util.mapping.DtoMapper;
 import com.example.demo.util.mapping.IDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -113,6 +115,5 @@ public class GameController {
         gameService.switchCurrentPlayer(boardId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 }

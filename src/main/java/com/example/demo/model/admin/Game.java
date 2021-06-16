@@ -6,6 +6,7 @@ public class Game {
     public String name;
     public Integer id;
     public boolean started;
+    public int width, height;
     public ArrayList<User> users = new ArrayList<>();
 
     public Integer getGameId() {

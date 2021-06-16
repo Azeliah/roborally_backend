@@ -11,4 +11,6 @@ public interface IGameDao {
     int createGame(Game game) throws DaoException;
 
     List<Game> getGames() throws DaoException;
+
+    void updateGame(Game game, int gameId) throws DaoException;
 }
