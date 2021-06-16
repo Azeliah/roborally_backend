@@ -1,7 +1,5 @@
 package com.example.demo.controller.gameadmin;
 
-import com.example.demo.controller.GameController.UserDto;
-
 import java.util.ArrayList;
 
 public class GameDto {
