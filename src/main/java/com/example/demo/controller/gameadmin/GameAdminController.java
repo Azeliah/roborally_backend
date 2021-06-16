@@ -28,7 +28,7 @@ public class GameAdminController {
 
 
     @GetMapping("/game")
-    public ResponseEntity<List<Game>> getGames() throws ServiceException, DaoException, MappingException{
+    public ResponseEntity<List<Game>> getGames() throws ServiceException, DaoException{
         List<Game> games = gameAdminService.getGames();
         return new ResponseEntity<>(games, HttpStatus.OK);
     }
