@@ -135,6 +135,4 @@ public class GameService implements IGameService {
         board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
         boardDao.updateBoard(board, board.getGameId());
     }
-
-
 }
