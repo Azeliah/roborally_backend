@@ -44,9 +44,9 @@ public class GameAdminController {
     @PostMapping("/game/{gameId}/user")
     public ResponseEntity<User> createUser(@PathVariable int gameId) throws ServiceException, DaoException {
         User user = new User();
-        user.setPlayerId(1234);
         user.setPlayerName("Player");
         user.setPlayerColor("red");
+        user.setGameId(gameId);
 
         Game game = gameAdminService.getGames().get(gameId - 1);
 

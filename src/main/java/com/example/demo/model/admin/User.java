@@ -6,6 +6,12 @@ public class User {
     private String playerColor;
     private int gameId;
 
+    private static int playerIdCounter = 0;
+
+    public User() {
+        this.playerId = playerIdCounter++;
+    }
+
     public int getPlayerId() {
         return playerId;
     }
