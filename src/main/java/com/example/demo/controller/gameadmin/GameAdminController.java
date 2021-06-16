@@ -4,6 +4,7 @@ import com.example.demo.exceptions.DaoException;
 import com.example.demo.exceptions.MappingException;
 import com.example.demo.exceptions.ServiceException;
 import com.example.demo.model.admin.Game;
+import com.example.demo.model.admin.User;
 import com.example.demo.service.implementations.GameAdminService;
 import com.example.demo.util.mapping.DtoMapper;
 import org.springframework.http.HttpStatus;
@@ -38,5 +39,19 @@ public class GameAdminController {
         gameAdminService.createGame(game);
         String gameName = gameDto.getName();
         return new ResponseEntity<>(gameName, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/game/{gameId}/user")
+    public ResponseEntity<User> createUser(@PathVariable int gameId) throws ServiceException, DaoException {
+        User user = new User();
+        user.playerId = 1234;
+        user.playerName = "Player";
+        user.color = "red";
+
+        Game game = gameAdminService.getGames().get(gameId - 1);
+
+        game.getUsers().add(user);
+
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 }
