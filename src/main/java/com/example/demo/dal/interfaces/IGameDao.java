@@ -13,6 +13,8 @@ public interface IGameDao {
 
     List<Game> getGames() throws DaoException;
 
+    User createUser(int gameId);
+
     void updateUser(User user);
 
     void addGame(Game game);

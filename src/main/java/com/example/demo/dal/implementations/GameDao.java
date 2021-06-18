@@ -24,6 +24,30 @@ public class GameDao implements IGameDao {
     }
 
     @Override
+    public User createUser(int gameId) {
+        if (gameId < 0)
+            return null;
+
+        Game game = games.get(gameId);
+        if (game == null)
+            return null;
+
+        int userNum = game.getUsers().size() + 1;
+
+        if (userNum > User.MAX_NO_USERS)
+            return null;
+
+        User user = new User();
+        user.setPlayerName("Player" + userNum);
+        user.setPlayerColor(User.COLORS[userNum - 1]);
+        user.setGameId(gameId);
+
+        game.getUsers().add(user);
+
+        return user;
+    }
+
+    @Override
     public void updateUser(User user) {
         Game game = games.get(user.getGameId());
         if (game == null)
@@ -42,8 +66,8 @@ public class GameDao implements IGameDao {
         if (foundUser == null)
             return;
 
-        game.users.get(index).setPlayerName(user.getPlayerName());
-        game.users.get(index).setPlayerColor(user.getPlayerColor());
+        foundUser.setPlayerName(user.getPlayerName());
+        foundUser.setPlayerColor(user.getPlayerColor());
     }
 
     @Override

@@ -26,7 +26,6 @@ public class GameAdminController {
         this.dtoMapper = dtoMapper;
     }
 
-
     @GetMapping("/game")
     public ResponseEntity<List<Game>> getGames() throws ServiceException, DaoException{
         List<Game> games = gameAdminService.getGames();
@@ -43,16 +42,8 @@ public class GameAdminController {
 
     @PostMapping("/game/{gameId}/user")
     public ResponseEntity<User> createUser(@PathVariable int gameId) throws ServiceException, DaoException {
-        User user = new User();
-        user.setPlayerName("Player");
-        user.setPlayerColor("red");
-        user.setGameId(gameId);
-
-        Game game = gameAdminService.getGames().get(gameId - 1);
-
-        game.getUsers().add(user);
-
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        User user = gameAdminService.createUser(gameId);
+        return new ResponseEntity<>(user, (user == null) ? HttpStatus.FORBIDDEN : HttpStatus.CREATED);
     }
 
     @PutMapping("game/{gameId}/user")

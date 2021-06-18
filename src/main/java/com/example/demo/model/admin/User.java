@@ -6,6 +6,9 @@ public class User {
     private String playerColor;
     private int gameId;
 
+    public static final int MAX_NO_USERS = 4;
+    public static final String[] COLORS = new String[]{"red", "green", "yellow", "blue"};
+
     private static int playerIdCounter = 0;
 
     public User() {

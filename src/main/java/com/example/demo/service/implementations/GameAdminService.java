@@ -66,6 +66,10 @@ public class GameAdminService implements IGameAdminService {
         //return "";
     }
 
+    public User createUser(int gameId) {
+        return gameDao.createUser(gameId);
+    }
+
     public void updateUser(User user) {
         gameDao.updateUser(user);
     }
