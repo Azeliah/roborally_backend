@@ -54,13 +54,11 @@ public class GameDao implements IGameDao {
             return;
 
         User foundUser = null;
-        int index = 0;
         for (User i : game.users) {
             if (i.getPlayerId() == user.getPlayerId()) {
                 foundUser = i;
                 break;
             }
-            index++;
         }
 
         if (foundUser == null)
