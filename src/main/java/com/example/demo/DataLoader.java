@@ -30,7 +30,7 @@ public class DataLoader implements ApplicationRunner {
         Player player1 = new Player(board, "blue", "Player1Name");
         gameService.addPlayer(board.getGameId(), player1);
         gameService.setCurrentPlayer(board.getGameId(), player1.getPlayerId());
-        gameService.moveCurrentPlayer(board.getGameId(), 1, 1);
+        gameService.moveCurrentPlayer(board.getGameId(), 1, 1, player1.getPlayerId());
 
         Player player2 = new Player(board, "green", "Player2Name");
         gameService.addPlayer(board.getGameId(), player2);
