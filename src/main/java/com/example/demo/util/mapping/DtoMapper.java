@@ -106,11 +106,15 @@ public class DtoMapper implements IDtoMapper {
 
     public Game convertToEntity(GameDto gameDto, boolean editMode) throws MappingException{
         Game game = new Game();
-        game.name=gameDto.getName();
         if (editMode){
+            game.name = gameDto.getName();
             game.width = gameDto.getWidth();
             game.height = gameDto.getHeight();
         }
+        else {
+        game.name=gameDto.getName();
+        }
+
         System.out.println(game.name);
         if(gameDto.getGameId() != -1){
             game.setGameId(gameDto.getGameId());

@@ -47,6 +47,5 @@ public class GameAdminController {
         Game game = dtoMapper.convertToEntity(gameDto, true);
         gameAdminService.editGame(game, gameId);
         return new ResponseEntity<>(HttpStatus.OK);
-
     }
 }
