@@ -66,10 +66,12 @@ public class GameAdminService implements IGameAdminService {
         //return "";
     }
 
+    @Override
     public User createUser(int gameId) {
         return gameDao.createUser(gameId);
     }
 
+    @Override
     public void updateUser(User user) {
         gameDao.updateUser(user);
     }
