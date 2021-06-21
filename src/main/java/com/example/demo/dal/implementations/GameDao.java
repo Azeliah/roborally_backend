@@ -5,6 +5,7 @@ import com.example.demo.exceptions.DaoException;
 import com.example.demo.exceptions.ServiceException;
 import com.example.demo.model.Board;
 import com.example.demo.model.admin.Game;
+import com.example.demo.model.admin.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -23,6 +24,51 @@ public class GameDao implements IGameDao {
     }
 
     @Override
+    public User createUser(int gameId) {
+        if (gameId < 0)
+            return null;
+
+        Game game = games.get(gameId);
+        if (game == null)
+            return null;
+
+        int userNum = game.getUsers().size() + 1;
+
+        if (userNum > User.MAX_NO_USERS)
+            return null;
+
+        User user = new User();
+        user.setPlayerName("Player" + userNum);
+        user.setPlayerColor(User.COLORS[userNum - 1]);
+        user.setGameId(gameId);
+
+        game.getUsers().add(user);
+
+        return user;
+    }
+
+    @Override
+    public void updateUser(User user) {
+        Game game = games.get(user.getGameId());
+        if (game == null)
+            return;
+
+        User foundUser = null;
+        for (User i : game.users) {
+            if (i.getPlayerId() == user.getPlayerId()) {
+                foundUser = i;
+                break;
+            }
+        }
+
+        if (foundUser == null)
+            return;
+
+        foundUser.setPlayerName(user.getPlayerName());
+        foundUser.setPlayerColor(user.getPlayerColor());
+    }
+
+    @Override
     public int createGame(Game game) {
         gameIdCounter++;
         game.setGameId(gameIdCounter);
@@ -31,8 +77,13 @@ public class GameDao implements IGameDao {
     }
 
     @Override
-    public List<Game> getGames(){
-        return new ArrayList<Game>(games.values());
+    public List<Game> getGames() {
+        return new ArrayList<>(games.values());
+    }
+
+    @Override
+    public void addGame(Game game) {
+        games.put(game.getGameId(), game);
     }
 
     @Override

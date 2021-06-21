@@ -1,5 +1,7 @@
 package com.example.demo.controller.GameController;
 
+import com.example.demo.controller.gameadmin.GameDto;
+import com.example.demo.controller.gameadmin.UserDto;
 import com.example.demo.dal.implementations.BoardDao;
 import com.example.demo.exceptions.DaoException;
 import com.example.demo.exceptions.MappingException;
@@ -7,6 +9,8 @@ import com.example.demo.exceptions.ServiceException;
 import com.example.demo.model.Board;
 import com.example.demo.model.Player;
 import com.example.demo.model.Space;
+import com.example.demo.model.admin.Game;
+import com.example.demo.model.admin.User;
 import com.example.demo.service.interfaces.IGameService;
 import com.example.demo.util.mapping.DtoMapper;
 import com.example.demo.util.mapping.IDtoMapper;
@@ -66,13 +70,17 @@ public class GameController {
     /**
      * Endpoint for creating a new board
      *
-     * @param boardDTO, a board dto describing the board we want to create
+     * @param gameDto, a game dto describing the board we want to create
      * @return id of the newly created board
      */
     @PostMapping("/board")
-    public ResponseEntity<Integer> createBoard(@RequestBody BoardDto boardDTO) throws ServiceException, DaoException {
-        Board board = dtoMapper.convertToEntity(boardDTO);
+    public ResponseEntity<Integer> createBoard(@RequestBody GameDto gameDto) throws ServiceException, DaoException {
+        Board board = new Board(gameDto.getWidth(), gameDto.getHeight(), gameDto.getName());
         int boardId = gameService.saveBoard(board);
+        for(UserDto u : gameDto.getUsers()){
+            Player p = new Player(board, u.getPlayerColor(), u.getPlayerName(), u.getPlayerId());
+            gameService.addPlayer(board.getGameId(), p);
+        }
         return new ResponseEntity<>(boardId, HttpStatus.CREATED);
     }
 
@@ -115,5 +123,6 @@ public class GameController {
         gameService.switchCurrentPlayer(boardId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 
 }

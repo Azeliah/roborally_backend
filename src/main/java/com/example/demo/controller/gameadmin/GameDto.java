@@ -1,9 +1,12 @@
 package com.example.demo.controller.gameadmin;
 
+import java.util.ArrayList;
+
 public class GameDto {
 
     private Integer gameId;
     private String name;
+    private UserDto[] users;
     private int width;
     private int height;
 
@@ -33,5 +36,9 @@ public class GameDto {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public UserDto[] getUsers() {
+        return users;
     }
 }

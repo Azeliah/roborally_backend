@@ -44,10 +44,11 @@ public class Player {
     private CommandCardField[] program;
     private CommandCardField[] cards;
 
-    public Player(@NotNull Board board, String color, @NotNull String name) {
+    public Player(@NotNull Board board, String color, @NotNull String name, int playerId) {
         this.board = board;
         this.name = name;
         this.color = color;
+        this.playerId = playerId;
 
         this.space = null;
 

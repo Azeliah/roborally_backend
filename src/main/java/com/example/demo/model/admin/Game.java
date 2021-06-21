@@ -6,7 +6,9 @@ public class Game {
     public String name;
     public Integer id;
     public boolean started;
-    public int width, height;
+    public int width;
+    public int height;
+
     public ArrayList<User> users = new ArrayList<>();
 
     public Integer getGameId() {
@@ -21,6 +23,10 @@ public class Game {
                 throw new IllegalStateException("A game with a set id may not be assigned a new id!");
             }
         }
+    }
+
+    public ArrayList<User> getUsers() {
+        return users;
     }
 
     public void setName(String name) {
