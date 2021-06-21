@@ -22,31 +22,37 @@ public class GameAdminService implements IGameAdminService {
     private final IBoardDao boardDao;
     private final IGameDao gameDao;
 
-    public GameAdminService(IBoardDao boardDao, IGameDao gameDao){
+    public GameAdminService(IBoardDao boardDao, IGameDao gameDao) {
 
         this.boardDao = boardDao;
         this.gameDao = gameDao;
     }
 
     @Override
-    public List<Game> getGames() throws ServiceException, DaoException{
+    public List<Game> getGames() throws ServiceException, DaoException {
         // TODO Change (only for demo)... This needs to be ONLY games send back not taking the boards and making them into games
         List<Game> result = new ArrayList<>(gameDao.getGames());
-        for (Board board: boardDao.getBoards()){
-            Game game = new Game();
-            game.name = board.boardName;
-            game.id = board.getGameId();
-            result.add(game);
 
-            game.started = board.getPlayersNumber() > 1;
-            for (int i=0; i < board.getPlayersNumber(); i++){
-                Player player = board.getPlayer(i);
-                User user = new User();
-                user.playerId = player.getPlayerId();
-                user.playerName = player.getName();
-                game.users.add(user);
+        /*if (result.size() == 0) {
+            for (Board board : boardDao.getBoards()) {
+                Game game = new Game();
+                game.name = board.boardName;
+                game.id = board.getGameId();
+                result.add(game);
+
+                game.started = board.getPlayersNumber() > 1;
+                for (int i = 0; i < board.getPlayersNumber(); i++) {
+                    Player player = board.getPlayer(i);
+                    User user = new User();
+                    user.setPlayerId(player.getPlayerId());
+                    user.setPlayerName(player.getName());
+                    user.setPlayerColor(player.getColor());
+                    user.setGameId(player.board.getGameId());
+                    game.users.add(user);
+                }
+                gameDao.addGame(game);
             }
-        }
+        }*/
         return result;
     }
 
@@ -58,6 +64,21 @@ public class GameAdminService implements IGameAdminService {
         }
         return gameId;
         //return "";
+    }
+
+    @Override
+    public User createUser(int gameId) {
+        return gameDao.createUser(gameId);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        gameDao.updateUser(user);
+    }
+
+    @Override
+    public void editGame(Game game, int gameId) throws ServiceException, DaoException {
+       gameDao.updateGame(game, gameId);
     }
 
 
