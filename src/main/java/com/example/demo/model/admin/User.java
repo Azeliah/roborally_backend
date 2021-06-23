@@ -9,7 +9,7 @@ public class User {
     public static final int MAX_NO_USERS = 4;
     public static final String[] COLORS = new String[]{"red", "green", "yellow", "blue"};
 
-    private static int playerIdCounter = 0;
+    private static int playerIdCounter = 1;
 
     public User() {
         this.playerId = playerIdCounter++;

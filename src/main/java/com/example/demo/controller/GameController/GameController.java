@@ -77,10 +77,13 @@ public class GameController {
     public ResponseEntity<Integer> createBoard(@RequestBody GameDto gameDto) throws ServiceException, DaoException {
         Board board = new Board(gameDto.getWidth(), gameDto.getHeight(), gameDto.getName());
         int boardId = gameService.saveBoard(board);
+        int startPos = 1;
         for(UserDto u : gameDto.getUsers()){
             Player p = new Player(board, u.getPlayerColor(), u.getPlayerName(), u.getPlayerId());
             gameService.addPlayer(board.getGameId(), p);
+            gameService.movePlayer(board, startPos++, 1, p.getPlayerId());
         }
+        board.setCurrentPlayer(board.getPlayer(0));
         return new ResponseEntity<>(boardId, HttpStatus.CREATED);
     }
 
