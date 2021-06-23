@@ -6,8 +6,6 @@ import com.example.demo.dal.interfaces.IGameDao;
 import com.example.demo.service.interfaces.IGameAdminService;
 import com.example.demo.exceptions.DaoException;
 import com.example.demo.exceptions.ServiceException;
-import com.example.demo.model.Board;
-import com.example.demo.model.Player;
 import com.example.demo.model.admin.Game;
 import com.example.demo.model.admin.User;
 import org.springframework.http.HttpStatus;
@@ -30,29 +28,7 @@ public class GameAdminService implements IGameAdminService {
 
     @Override
     public List<Game> getGames() throws ServiceException, DaoException {
-        // TODO Change (only for demo)... This needs to be ONLY games send back not taking the boards and making them into games
-        List<Game> result = new ArrayList<>(gameDao.getGames());
-        /*if (result.size() == 0) {
-            for (Board board : boardDao.getBoards()) {
-                Game game = new Game();
-                game.name = board.boardName;
-                game.id = board.getGameId();
-                result.add(game);
-
-                game.started = board.getPlayersNumber() > 1;
-                for (int i = 0; i < board.getPlayersNumber(); i++) {
-                    Player player = board.getPlayer(i);
-                    User user = new User();
-                    user.setPlayerId(player.getPlayerId());
-                    user.setPlayerName(player.getName());
-                    user.setPlayerColor(player.getColor());
-                    user.setGameId(player.board.getGameId());
-                    game.users.add(user);
-                }
-                gameDao.addGame(game);
-            }
-        }*/
-        return result;
+        return new ArrayList<>(gameDao.getGames());
     }
 
     @Override
@@ -62,7 +38,6 @@ public class GameAdminService implements IGameAdminService {
             throw new ServiceException("BoardDao generated invalid boardId " + gameId, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return gameId;
-        //return "";
     }
 
     @Override
@@ -77,8 +52,16 @@ public class GameAdminService implements IGameAdminService {
 
     @Override
     public void editGame(Game game, int gameId) throws ServiceException, DaoException {
-       gameDao.updateGame(game, gameId);
+        gameDao.updateGame(game, gameId);
     }
 
-
+    @Override
+    public void startGame(int gameId) throws DaoException {
+        for (Game g : gameDao.getGames()) {
+            if (g.getGameId() == gameId) {
+                g.started = true;
+                return;
+            }
+        }
+    }
 }
