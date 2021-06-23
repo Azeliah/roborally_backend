@@ -19,4 +19,6 @@ public interface IGameAdminService{
     void updateUser(User user);
 
     void editGame(Game game, int gameId) throws ServiceException, DaoException;
+
+    void startGame(int gameId) throws DaoException;
 }
