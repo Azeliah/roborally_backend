@@ -88,7 +88,7 @@ public class GameDao implements IGameDao {
 
     @Override
     public void updateGame (Game game, int gameId) {
-        Game gameEdit = games.get(gameId+1);
+        Game gameEdit = games.get(game.getGameId());
         gameEdit.name = game.name;
         gameEdit.width = game.width;
         gameEdit.height = game.height;
