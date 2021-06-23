@@ -95,7 +95,7 @@ public class GameController {
     public ResponseEntity<Void> moveCurrentPlayer(@PathVariable("boardId") int boardId, @RequestBody SpaceDto spaceDto) throws ServiceException, DaoException {
         Board board = gameService.getBoard(boardId);
         Space space = dtoMapper.convertToEntity(spaceDto, board);
-        gameService.moveCurrentPlayer(boardId, space.x, space.y);
+        gameService.moveCurrentPlayer(boardId, space.x, space.y, spaceDto.getPlayerId());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -118,9 +118,9 @@ public class GameController {
      * @param boardId the board we are operating upon
      * @return nothing
      */
-    @PutMapping("/board/{boardId}/switchplayer")
-    public ResponseEntity<Void> switchPlayer(@PathVariable("boardId") int boardId) throws ServiceException, DaoException {
-        gameService.switchCurrentPlayer(boardId);
+    @PutMapping("/board/{boardId}/switchplayer/{playerId}")
+    public ResponseEntity<Void> switchPlayer(@PathVariable("boardId") int boardId, @PathVariable("playerId") int playerId) throws ServiceException, DaoException {
+        gameService.switchCurrentPlayer(boardId, playerId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
