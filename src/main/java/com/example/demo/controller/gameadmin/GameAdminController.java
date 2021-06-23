@@ -59,4 +59,10 @@ public class GameAdminController {
         gameAdminService.editGame(game, gameId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PutMapping("/game/started/{gameId}")
+    public ResponseEntity<Void> startGame(@PathVariable("gameId") int gameId) throws ServiceException, DaoException, MappingException {
+        gameAdminService.startGame(gameId);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
