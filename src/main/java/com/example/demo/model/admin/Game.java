@@ -6,8 +6,8 @@ public class Game {
     public String name;
     public Integer id;
     public boolean started;
-    public int width;
-    public int height;
+    public int width = 6;
+    public int height = 6;
 
     public ArrayList<User> users = new ArrayList<>();
 
