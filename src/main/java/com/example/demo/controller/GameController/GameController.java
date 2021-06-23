@@ -86,7 +86,6 @@ public class GameController {
         }
         board.setCurrentPlayer(board.getPlayer(0));
 
-        System.out.println("Width: " + gameDto.getWidth() + ", Height: " + gameDto.getHeight());
         return new ResponseEntity<>(boardId, HttpStatus.CREATED);
     }
 

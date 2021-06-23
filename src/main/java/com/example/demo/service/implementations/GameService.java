@@ -102,7 +102,7 @@ public class GameService implements IGameService {
         if (currentPlayer == null) {
             throw new ServiceException("The board " + boardId + " has no current player", HttpStatus.BAD_REQUEST);
         }
-        if (x < 0 || y < 0 || x > board.height || y > board.width) {
+        if (x < 0 || y < 0 || x > board.width || y > board.height) {
             throw new ServiceException("Space coordinates (" + x + "," + y + ") were invalid for board" + boardId, HttpStatus.BAD_REQUEST);
         }
         Space targetSpace = board.getSpace(x, y);
@@ -110,7 +110,7 @@ public class GameService implements IGameService {
             throw new ServiceException("Provided target space was not found", HttpStatus.NOT_FOUND);
         }
 
-        if(currentPlayer.getPlayerId() != playerId){
+        if (currentPlayer.getPlayerId() != playerId) {
             return;
         }
 
@@ -136,7 +136,7 @@ public class GameService implements IGameService {
             throw new ServiceException("Trying to switch current player, but board has no players", HttpStatus.BAD_REQUEST);
         }
 
-        if(board.getCurrentPlayer().getPlayerId() != playerId){
+        if (board.getCurrentPlayer().getPlayerId() != playerId) {
             return;
         }
 
