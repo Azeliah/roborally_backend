@@ -13,12 +13,9 @@ import java.util.HashMap;
 public class PlayerDao implements IPlayerDao {
     //PlayerId, Player
     static final HashMap<Integer, Player> players = new HashMap<>();
-    static private int playerIdCounter = 0;
 
     @Override
     public int addPlayer(int boardId, Player player) {
-        playerIdCounter++;
-        player.setPlayerId(playerIdCounter);
         players.put(player.getPlayerId(), player);
         return player.getPlayerId();
     }
