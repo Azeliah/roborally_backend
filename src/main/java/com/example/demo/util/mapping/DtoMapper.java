@@ -4,18 +4,20 @@ import com.example.demo.controller.GameController.BoardDto;
 import com.example.demo.controller.GameController.PlayerDto;
 import com.example.demo.controller.GameController.SpaceDto;
 import com.example.demo.controller.gameadmin.GameDto;
+import com.example.demo.controller.gameadmin.UserDto;
 import com.example.demo.exceptions.MappingException;
 import com.example.demo.model.Board;
 import com.example.demo.model.Player;
 import com.example.demo.model.Space;
 import com.example.demo.model.admin.Game;
+import com.example.demo.model.admin.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.Mapping;
 
 @Service
 public class DtoMapper implements IDtoMapper {
     public PlayerDto convertToDto(Player player) throws MappingException {
-        if(player == null){
+        if (player == null) {
             throw new MappingException("Player was null");
         }
         PlayerDto playerDto = new PlayerDto();
@@ -34,7 +36,7 @@ public class DtoMapper implements IDtoMapper {
 
 
     public BoardDto convertToDto(Board board) throws MappingException {
-        if(board == null){
+        if (board == null) {
             throw new MappingException("Board was null");
         }
         BoardDto boardDto = new BoardDto();
@@ -67,7 +69,7 @@ public class DtoMapper implements IDtoMapper {
     }
 
     public SpaceDto convertToDto(Space space) throws MappingException {
-        if(space == null){
+        if (space == null) {
             throw new MappingException("Space was null");
         }
         SpaceDto spaceDto = new SpaceDto();
@@ -99,18 +101,33 @@ public class DtoMapper implements IDtoMapper {
             throw new MappingException("Board was null when trying to convert PlayerDto to Player");
         }
         if (playerDto.getPlayerId() == null) { //If we have not provided a player id, we are creating a new player
-            return new Player(board, playerDto.getPlayerColor(), playerDto.getPlayerName());
+            return new Player(board, playerDto.getPlayerColor(), playerDto.getPlayerName(), playerDto.getPlayerId());
         }
         return null;
     }
 
-    public Game convertToEntity(GameDto gameDto) throws MappingException{
+    public Game convertToEntity(GameDto gameDto, boolean editMode) throws MappingException{
         Game game = new Game();
-        game.setName(gameDto.getName());
+        if (editMode){
+            game.width = gameDto.getWidth();
+            game.height = gameDto.getHeight();
+        }
+        game.name=gameDto.getName();
+
         if(gameDto.getGameId() != -1){
             game.setGameId(gameDto.getGameId());
         }
         return game;
+    }
 
+    public User convertToEntity(UserDto userDto) {
+        User user = new User();
+        user.setPlayerName(userDto.getPlayerName());
+        if (userDto.getPlayerId() != -1)
+            user.setPlayerId(userDto.getPlayerId());
+        user.setPlayerName(userDto.getPlayerName());
+        user.setPlayerColor(userDto.getPlayerColor());
+        user.setGameId(userDto.getGameId());
+        return user;
     }
 }

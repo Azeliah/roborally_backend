@@ -96,19 +96,24 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public void moveCurrentPlayer(int boardId, int x, int y) throws ServiceException, DaoException {
+    public void moveCurrentPlayer(int boardId, int x, int y, int playerId) throws ServiceException, DaoException {
         Board board = this.getBoard(boardId);
         Player currentPlayer = board.getCurrentPlayer();
         if (currentPlayer == null) {
             throw new ServiceException("The board " + boardId + " has no current player", HttpStatus.BAD_REQUEST);
         }
-        if (x < 0 || y < 0 || x > board.height || y > board.width) {
+        if (x < 0 || y < 0 || x > board.width || y > board.height) {
             throw new ServiceException("Space coordinates (" + x + "," + y + ") were invalid for board" + boardId, HttpStatus.BAD_REQUEST);
         }
         Space targetSpace = board.getSpace(x, y);
         if (targetSpace == null) {
             throw new ServiceException("Provided target space was not found", HttpStatus.NOT_FOUND);
         }
+
+        if (currentPlayer.getPlayerId() != playerId) {
+            return;
+        }
+
         currentPlayer.setSpace(targetSpace);
         boardDao.updateBoard(board, board.getGameId());
     }
@@ -124,17 +129,20 @@ public class GameService implements IGameService {
     }
 
     @Override
-    public void switchCurrentPlayer(int boardId) throws ServiceException, DaoException {
+    public void switchCurrentPlayer(int boardId, int playerId) throws ServiceException, DaoException {
         Board board = this.getBoard(boardId);
         int amountOfPlayers = board.getPlayersNumber();
         if (amountOfPlayers <= 0) {
             throw new ServiceException("Trying to switch current player, but board has no players", HttpStatus.BAD_REQUEST);
         }
+
+        if (board.getCurrentPlayer().getPlayerId() != playerId) {
+            return;
+        }
+
         int currentPlayerNumber = board.getPlayerNumber(board.getCurrentPlayer());
         int nextPlayerNumber = (currentPlayerNumber + 1) % amountOfPlayers;
         board.setCurrentPlayer(board.getPlayer(nextPlayerNumber));
         boardDao.updateBoard(board, board.getGameId());
     }
-
-
 }
